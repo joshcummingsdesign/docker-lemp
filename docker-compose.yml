@@ -1,0 +1,22 @@
+version: '2'
+services:
+  nginx:
+    image: tutum/nginx
+    ports:
+      - "80:80"
+    links:
+      - phpfpm
+      - mysql
+    volumes:
+      - ./nginx/default:/etc/nginx/sites-available/default
+      - ./nginx/default:/etc/nginx/sites-enabled/default
+  phpfpm:
+    image: joshcummingsdesign/phpfpm
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./public:/usr/share/nginx/html
+  mysql:
+    image: mariadb:10.1.17
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
